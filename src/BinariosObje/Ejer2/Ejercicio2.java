@@ -4,7 +4,7 @@ import java.io.*;
 
 
 public class Ejercicio2 {
-    private static String directorio = "src/binariosDos/Ejer2/";
+    private static String directorio = "src/binariosObje/Ejer2/";
     private static String fichero = "alumnos.dat";
 
     public static void main(String[] args) {

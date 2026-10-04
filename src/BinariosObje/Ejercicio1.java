@@ -3,7 +3,7 @@ package BinariosObje;
 import java.io.*;
 
 public class Ejercicio1 {
-    private static String directorio= "src/binariosDos/";
+    private static String directorio= "src/binariosObje/";
     private static String fichero="numeros.dat";
 
     public static void main(String[] args)  {
