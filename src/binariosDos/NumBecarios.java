@@ -3,17 +3,18 @@ package binariosDos;
 import java.io.*;
 import java.util.Scanner;
 
-public class EntradaTeclado {
+public class NumBecarios {
     private static String directorio="src/binariosDos/";
     private static String fichero="datosbeca.bin";
 
     public static void main(String[] args) {
         Scanner sc= new Scanner(System.in);
         boolean fin = false;
-
+        System.out.println("¿Cuántos becarios deseas introducir?");
+        int numBecarios = Integer.parseInt(sc.nextLine());
 
         try(DataOutputStream escribir= new DataOutputStream(new FileOutputStream(directorio+fichero, true))){
-            while(!fin){
+            for (int i = 0; i < numBecarios; i++) {
                 System.out.println("introduce los datos del becario;");
                 System.out.println("Nombre");
                 String nombre = sc.nextLine();
@@ -26,7 +27,7 @@ public class EntradaTeclado {
                 }
                 System.out.println("Edad (20-60):");
                 int edad = Integer.parseInt(sc.nextLine());
-                if(edad<20 || edad>60){
+                if (edad < 20 || edad > 60) {
                     System.out.println("La edad debe estar entre 20 y 60 años.");
                 }
                 System.out.println("Número de suspensos del curso anterior (0-4):");
@@ -36,14 +37,14 @@ public class EntradaTeclado {
                 }
                 System.out.println("Residencia familiar (SI/NO):");
                 String residencia = sc.nextLine();
-                if(!residencia.equalsIgnoreCase("si")&& !residencia.equalsIgnoreCase("no")){
+                if (!residencia.equalsIgnoreCase("si") && !residencia.equalsIgnoreCase("no")) {
                     System.out.println(" Responda SI o NO.");
                 }
                 System.out.println("Ingresos anuales de la familia:");
                 double ingresosAnuales = Double.parseDouble(sc.nextLine());
                 System.out.println("Tiene beca (SI/NO):");
                 String tieneBeca = sc.nextLine();
-                if(!tieneBeca.equalsIgnoreCase("si")&& !tieneBeca.equalsIgnoreCase("no")){
+                if (!tieneBeca.equalsIgnoreCase("si") && !tieneBeca.equalsIgnoreCase("no")) {
                     System.out.println(" Responda SI o NO.");
                 }
 
@@ -56,11 +57,9 @@ public class EntradaTeclado {
                 escribir.writeDouble(ingresosAnuales);
                 escribir.writeUTF(tieneBeca);
 
-                System.out.println("Desea introducir otro becario? S/N");
-                String respuesta = sc.nextLine();
-                if (respuesta.equalsIgnoreCase("N")) {
-                    fin = true;
-                }
+
+                numBecarios++;
+
             }
 
         } catch (IOException e) {
@@ -68,6 +67,7 @@ public class EntradaTeclado {
         }
 
         try(DataInputStream leer=new DataInputStream(new FileInputStream(directorio+fichero))) {
+
             while(leer.available() > 0) {
                 String nombre = leer.readUTF();
                 String apellidos = leer.readUTF();
@@ -81,7 +81,9 @@ public class EntradaTeclado {
                 System.out.println(nombre + " " + apellidos  );
                 System.out.println("Sexo " +sexo +" "+ edad + " años  ");
                 System.out.println(suspensos + " suspensos - Residencia: " + residencia + " - Ingresos: " + ingresosAnuales + " - Beca: " + tieneBeca);
+
             }
+
 
         } catch (IOException e) {
             System.out.println("Error al leer en el fichero: ");
